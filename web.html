@@ -37,25 +37,48 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            text-decoration: none;
+            color: black;
+            border: 2px solid black;
+        }
+        .quantity button {
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+        .quantity input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ccc;
+            margin: 0 5px;
+        }
+        .note {
+            font-size: 14px;
+            margin-top: 20px;
+            color: #666;
         }
     </style>
     <script>
-        const currencyConversionRate = 1.12; // Conversion rate from your currency to euros
+        const currencyConversionRate = 24.62; // Conversion rate from CZK to euros
 
         function updateTotal() {
-            const marijuanaPrice = 5.26;
-            const bongPrice = 56;
-            const tobaccoPrice = 5 / 100;
+            const marijuanaPrice = 225; // Updated price
+            const bongPrice = 1378.64;
+            const tobaccoPrice = 598; // Updated price
+            const weed15Price = 120; // Updated price, THC only
+            const seedsPrice = 299.99;
 
             const marijuanaQty = parseInt(document.getElementById('marijuanaQty').value) || 0;
             const bongQty = parseInt(document.getElementById('bongQty').value) || 0;
             const tobaccoQty = parseInt(document.getElementById('tobaccoQty').value) || 0;
+            const weed15Qty = parseInt(document.getElementById('weed15Qty').value) || 0;
+            const seedsQty = parseInt(document.getElementById('seedsQty').value) || 0;
 
-            const totalPrice = (marijuanaPrice * marijuanaQty) + (bongPrice * bongQty) + (tobaccoPrice * tobaccoQty);
-            const totalPriceEuros = totalPrice * currencyConversionRate;
+            const totalPrice = (marijuanaPrice * marijuanaQty) + (bongPrice * bongQty) + (tobaccoPrice * tobaccoQty) + (weed15Price * weed15Qty) + (seedsPrice * seedsQty);
+            const totalPriceEuros = totalPrice / currencyConversionRate;
 
-            document.getElementById('totalPrice').innerText = `Total price: ${totalPrice.toFixed(2)}€`;
-            document.getElementById('buyButton').href = `https://www.paypal.me/EmillySmith96/${totalPriceEuros.toFixed(2)}`;
+            document.getElementById('totalPrice').innerText = `Total price: ${totalPrice.toFixed(2)} CZK`;
+            document.getElementById('totalPriceEuros').innerText = `Total price in euros: ${totalPriceEuros.toFixed(2)}€`;
+            document.getElementById('buyButton').href = `https://www.paypal.me/EmillySmith96/${totalPrice.toFixed(2)}`;
         }
 
         function increment(id) {
@@ -77,36 +100,56 @@
     <div class="container">
         <div class="product">
             <img src="marijuana.jpg" alt="Marijuana">
-            <div class="name">Marijuana</div>
-            <div class="price">5,26€ per gram</div>
+            <div class="price">225 CZK per gram</div> <!-- Updated price -->
             <div class="quantity">
                 <button onclick="decrement('marijuanaQty')">-</button>
-                <input type="text" id="marijuanaQty" value="1" readonly>
+                <input type="text" id="marijuanaQty" value="0" readonly>
                 <button onclick="increment('marijuanaQty')">+</button>
             </div>
         </div>
         <div class="product">
             <img src="bong.jpg" alt="Bong">
-            <div class="name">Bong</div>
-            <div class="price">56€</div>
+            <div class="price">1378.64 CZK</div>
             <div class="quantity">
                 <button onclick="decrement('bongQty')">-</button>
-                <input type="text" id="bongQty" value="1" readonly>
+                <input type="text" id="bongQty" value="0" readonly>
                 <button onclick="increment('bongQty')">+</button>
             </div>
         </div>
         <div class="product">
             <img src="tobacco.jpg" alt="Tobacco">
-            <div class="name">Tobacco</div>
-            <div class="price">5€ per 100 grams</div>
+            <div class="price">598 CZK per 100 grams</div> <!-- Updated price -->
             <div class="quantity">
                 <button onclick="decrement('tobaccoQty')">-</button>
-                <input type="text" id="tobaccoQty" value="1" readonly>
+                <input type="text" id="tobaccoQty" value="0" readonly>
                 <button onclick="increment('tobaccoQty')">+</button>
             </div>
         </div>
+        <div class="product">
+            <img src="weed15.jpg" alt="Weed 15% THC">
+            <div class="price">120 CZK per gram</div> <!-- Updated price and description -->
+            <div class="quantity">
+                <button onclick="decrement('weed15Qty')">-</button>
+                <input type="text" id="weed15Qty" value="0" readonly>
+                <button onclick="increment('weed15Qty')">+</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="seeds.jpg" alt="Marijuana Seeds">
+            <div class="price">299.99 CZK per pack</div>
+            <div class="quantity">
+                <button onclick="decrement('seedsQty')">-</button>
+                <input type="text" id="seedsQty" value="0" readonly>
+                <button onclick="increment('seedsQty')">+</button>
+            </div>
+        </div>
     </div>
-    <div class="total-price" id="totalPrice">Total price: 0€</div>
+    <div class="total-price" id="totalPrice">Total price: 0 CZK</div>
+    <div class="total-price" id="totalPriceEuros">Total price in euros: 0€</div>
+    <!-- Buy button -->
     <a id="buyButton" class="buy-button" href="https://www.paypal.me/EmillySmith96/0">Buy</a>
+    <!-- Note about PayPal payment and currency change -->
+    <div class="note">Payment should be made with PayPal in Czech Crowns (CZK).</div>
 </body>
 </html>
+
